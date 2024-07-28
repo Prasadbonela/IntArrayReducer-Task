@@ -1,20 +1,82 @@
 package edu.epam.fop.lambdas;
 
-// TODO write your implementation here
+import java.util.HashSet;
+import java.util.Set;
+
 public interface IntArrayReducers {
 
-  static IntArrayReducer SUMMARIZER = null;
+  IntArrayReducer SUMMARIZER = array -> {
+    int res = 0;
+    for (int i : array) {
+      res += i;
+    }
+    return res;
+  };
 
-  static IntArrayReducer MULTIPLIER = null;
+  IntArrayReducer MULTIPLIER = array -> {
+    int res = 1;
+    for (int j : array) {
+      res *= j;
+    }
+    return res;
+  };
 
-  static IntArrayReducer MIN_FINDER = null;
+  IntArrayReducer MIN_FINDER = array -> {
+    int minValue = Integer.MAX_VALUE;
+    for (int i : array) {
+      minValue = Math.min(minValue, i);
+    }
+    return minValue;
+  };
 
-  static IntArrayReducer MAX_FINDER = null;
+  IntArrayReducer MAX_FINDER = array -> {
+    int maxValue = Integer.MIN_VALUE;
+    for (int i : array) {
+      maxValue = Math.max(maxValue, i);
+    }
+    return maxValue;
+  };
 
-  static IntArrayReducer AVERAGE_CALCULATOR = null;
+  IntArrayReducer AVERAGE_CALCULATOR = array -> {
+    double sum = 0;
+    for (int i : array) {
+      sum += i;
+    }
+    return Math.round((float) sum / array.length);
+  };
 
-  static IntArrayReducer UNIQUE_COUNTER = null;
+  IntArrayReducer UNIQUE_COUNTER = array -> {
+    Set<Integer> unique = new HashSet<>();
+    for (int element : array) {
+      unique.add(element);
+    }
+    return unique.size();
+  };
 
-  static IntArrayReducer SORT_DIRECTION_DEFINER = null;
+  IntArrayReducer SORT_DIRECTION_DEFINER = array -> {
+    if (array.length == 1 || array.length == 0) return 0;
+    if (array.length == 2 && array[0] == array[1]) return 0;
 
+    int ascending = 1;
+    int descending = - 1;
+
+    boolean isAscending = true;
+    boolean isDescending = true;
+
+    for (int i = 1; i < array.length; i++) {
+      if (array[i] > array[i - 1]) {
+        isDescending = false;
+      } else if (array[i] < array[i - 1]) {
+        isAscending = false;
+      }
+    }
+
+    if (isAscending) {
+      return ascending;
+    } else if (isDescending) {
+      return descending;
+    } else {
+      return 0;
+    }
+  };
 }
